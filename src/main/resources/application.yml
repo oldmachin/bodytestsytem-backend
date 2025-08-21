@@ -1,0 +1,30 @@
+spring:
+  # 应用信息
+  application:
+    name: 大学生体质测试管理系统
+
+  # MySQL数据库连接配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/test_database?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # JPA/Hibernate配置
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+
+jwt:
+  secret: 9k1VkVslSyDrIe1M9lQGNgHYJ0kvXfMrzuTp1EJ5OwE=
+  expiration: 3600000
+  refresh-token: 604800000

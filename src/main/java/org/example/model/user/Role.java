@@ -1,4 +1,9 @@
 package org.example.model.user;
 
-public class Role {
+import jakarta.persistence.*;
+
+public enum Role {
+    ADMINISTRATOR,
+    TEACHER,
+    STUDENT
 }

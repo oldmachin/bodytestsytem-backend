@@ -1,17 +1,36 @@
 plugins {
     id 'java'
+    id("org.springframework.boot") version "3.5.3"
+    id("io.spring.dependency-management") version "1.1.7"
 }
 
 group = 'org.example'
 version = '1.0-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    // Spring Boot 核心组件
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.5.3'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.5.3'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.5.3'
+
+    // 数据库连接驱动
+    implementation 'com.mysql:mysql-connector-j:9.4.0'
+
+    // 身份验证和授权组件
+    implementation 'org.springframework.boot:spring-boot-starter-security:3.5.3'
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.7'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.7'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.7'
 }
 
 test {
