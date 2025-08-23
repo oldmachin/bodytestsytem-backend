@@ -32,8 +32,9 @@ public class UserController {
     public ResponseEntity<?> registerUser(@RequestBody Map<String, String> request) {
         String username = request.get("username");
         String password = request.get("password");
+        String roleName = request.get("roleName");
         try {
-            User newUser = userService.register(username, password);
+            User newUser = userService.register(username, password, roleName);
             return new ResponseEntity<>(newUser, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);

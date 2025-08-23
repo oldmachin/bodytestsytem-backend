@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Service
 public interface UserService {
-    User register(String username, String password);
+    User register(String username, String password, String roleName);
 
     UserDetails login(String username, String password);
 

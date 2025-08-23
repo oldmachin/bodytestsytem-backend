@@ -24,11 +24,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User register(String username, String password) {
+    public User register(String username, String password, String roleName) {
         if (userRepository.existsByUsername(username)) {
             throw new RuntimeException("Username has already existed.");
         }
-        User newUser = new User(username, passwordEncoder.encode(password), Role.STUDENT);
+        if (roleName == null || roleName.isEmpty()) {
+            throw new RuntimeException("Invalid roleName argument.");
+        }
+        User newUser = new User(username, passwordEncoder.encode(password), Role.valueOf(roleName));
         userRepository.save(newUser);
         return newUser;
     }
