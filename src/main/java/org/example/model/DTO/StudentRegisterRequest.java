@@ -7,7 +7,7 @@ public record StudentRegisterRequest(
     String idCardNumber,
     String name,
     String gender,
-    Long ethnicCode,
+    String ethnicGroup,
     Grade grade,
     String major
 ) {

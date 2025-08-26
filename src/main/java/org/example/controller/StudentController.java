@@ -13,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.charset.StandardCharsets;
-
 @RestController
 @RequestMapping("/api/students")
 public class StudentController {
@@ -29,19 +27,19 @@ public class StudentController {
     }
 
     // 删除学生
-    @DeleteMapping
-    public ResponseEntity<Void> deleteStudent(Long studentId) {
-        studentService.deleteStudent(studentId);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudent(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // 修改学生的相关信息
-    @PutMapping("/{studentId}")
+    @PutMapping("/{id}")
     public ResponseEntity<Student> updateStudent(
-            @PathVariable Long studentId,
+            @PathVariable Long id,
             @RequestBody StudentUpdateRequest request
     ) {
-        Student updatedStudent = studentService.updateStudent(studentId, request);
+        Student updatedStudent = studentService.updateStudent(id, request);
         return ResponseEntity.ok(updatedStudent);
     }
 
@@ -53,24 +51,25 @@ public class StudentController {
     }
 
     // 查询学生的相关信息
-    @GetMapping("/{studentId}")
-    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long studentId) {
-        Student student = studentService.getStudentById(studentId);
+    @GetMapping("/{id}")
+    public ResponseEntity<StudentDTO> getStudentById(@PathVariable Long id) {
+        Student student = studentService.getStudentById(id);
         return ResponseEntity.ok(new StudentDTO(
                 student.getId(),
                 student.getStudentId(),
                 student.getName(),
                 student.getIdCardNumber(),
                 student.getGender(),
-                student.getEthnicCode(),
+                student.getEthnicGroup(),
                 student.getGrade(),
                 student.getMajor()
         ));
     }
 
-    @PutMapping("/{studentId}/password-reset")
-    public ResponseEntity<Void> resetStudentUserPassword(@PathVariable Long studentId, String oldPassword, String idCardNumber, String newPassword) {
-        studentService.saveStudent(studentId, oldPassword, idCardNumber, newPassword);
+    // 重置登录密码
+    @PutMapping("/{Id}/password-reset")
+    public ResponseEntity<Void> resetStudentUserPassword(@PathVariable Long id, String oldPassword, String idCardNumber, String newPassword) {
+        studentService.saveStudent(id, oldPassword, idCardNumber, newPassword);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

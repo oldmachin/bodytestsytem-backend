@@ -46,7 +46,7 @@ public class StudentService {
                 request.idCardNumber(),
                 request.name(),
                 request.gender(),
-                request.ethnicCode(),
+                request.ethnicGroup(),
                 request.grade(),
                 request.major(),
                 user

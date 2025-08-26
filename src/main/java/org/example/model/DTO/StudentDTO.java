@@ -9,7 +9,7 @@ public record StudentDTO(
         String studentName,
         String idCardNumber,
         String gender,
-        Long ethnicCode,
+        String ethnicGroup,
         Grade grade,
         String major
 ) {

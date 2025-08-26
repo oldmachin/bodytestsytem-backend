@@ -1,7 +1,11 @@
 package org.example.model.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.example.model.entity.department.Class;
+import org.example.model.score.Transcript;
+
+import java.util.List;
 
 @Entity
 @Table(name = "students")
@@ -19,7 +23,7 @@ public class Student {
 
     private String gender;
 
-    private Long ethnicCode;
+    private String ethnicGroup;
 
     private Grade grade;
 
@@ -27,20 +31,25 @@ public class Student {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "class_id")
+    @JsonIgnore
     private Class studentClass;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Transcript> transcripts;
 
     public Student() {}
 
-    public Student(String studentId, String idCardNumber, String name, String gender, Long ethnicCode, Grade grade, String major, User user) {
+    public Student(String studentId, String idCardNumber, String name, String gender, String ethnicGroup, Grade grade, String major, User user) {
         this.studentId = studentId;
         this.idCardNumber = idCardNumber;
         this.name = name;
         this.gender = gender;
-        this.ethnicCode = ethnicCode;
+        this.ethnicGroup = ethnicGroup;
         this.grade = grade;
         this.major = major;
         this.user = user;
@@ -66,13 +75,11 @@ public class Student {
         return gender;
     }
 
-    public Long getEthnicCode() {
-        return ethnicCode;
+    public String getEthnicGroup() {
+        return ethnicGroup;
     }
 
-    public User getUser() {
-        return user;
-    }
+    public User getUser() { return user; }
 
     public Grade getGrade() {
         return grade;
@@ -102,8 +109,16 @@ public class Student {
         this.gender = gender;
     }
 
-    public void setEthnicCode(Long ethnicCode) {
-        this.ethnicCode = ethnicCode;
+    public void setEthnicGroups(String ethnicGroup) {
+        this.ethnicGroup = ethnicGroup;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setStudentClass(Class studentClass) {
+        this.studentClass = studentClass;
     }
 
     public void setGrade(Grade grade) {
