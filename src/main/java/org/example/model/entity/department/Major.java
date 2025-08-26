@@ -1,5 +1,6 @@
 package org.example.model.entity.department;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.Year;
@@ -38,6 +39,7 @@ public class Major {
 
     @ManyToOne
     @JoinColumn(name = "school_id", nullable = false)
+    @JsonIgnore
     private School school;
 
     public Major() {

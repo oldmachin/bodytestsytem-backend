@@ -5,7 +5,6 @@ import jakarta.transaction.Transactional;
 import org.example.model.DTO.MajorSplitRequestDTO;
 import org.example.model.entity.department.Class;
 import org.example.model.entity.department.Major;
-import org.example.model.entity.department.School;
 import org.example.repository.ClassRepository;
 import org.example.repository.MajorRepository;
 import org.example.repository.SchoolRepository;
