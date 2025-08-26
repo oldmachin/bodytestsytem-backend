@@ -20,7 +20,7 @@ public class Student {
 
     private Long ethnicCode;
 
-    private String grade;
+    private Grade grade;
 
     private String major;
 
@@ -29,7 +29,7 @@ public class Student {
     private User user;
 
 
-    public Student(Long id, String studentId, String idCardNumber, String name, String gender, Long ethnicCode, String grade, String major, User user) {
+    public Student(Long id, String studentId, String idCardNumber, String name, String gender, Long ethnicCode, Grade grade, String major, User user) {
         this.id = id;
         this.studentId = studentId;
         this.idCardNumber = idCardNumber;
@@ -65,7 +65,7 @@ public class Student {
         return ethnicCode;
     }
 
-    public String getGrade() {
+    public Grade getGrade() {
         return grade;
     }
 
@@ -97,7 +97,7 @@ public class Student {
         this.ethnicCode = ethnicCode;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Grade grade) {
         this.grade = grade;
     }
 
