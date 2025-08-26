@@ -5,7 +5,7 @@ spring:
 
   # MySQL数据库连接配置
   datasource:
-    url: jdbc:mysql://localhost:3306/test_database?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/test_database?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Shanghai&default-character-set=utf8mb4&useUnicode=true
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -14,10 +14,16 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+      format-sql: true
+      org:
+        jdbc:
+          bind: TRACE
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+      connection:
+        charset: utf8mb4
 
 logging:
   level:

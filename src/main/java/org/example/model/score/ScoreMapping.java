@@ -1,37 +1,82 @@
 package org.example.model.score;
 
-public class ScoreMapping {
+import jakarta.persistence.*;
+import org.example.model.user.Grade;
 
+@Entity
+@Table(name = "score_mappings")
+public class ScoreMapping {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // 该分数等级对应的评分等级
+    @Enumerated(EnumType.STRING)
     private ScoreLevel scoreLevel;
 
+    // 该分数等级对应的得分
     private int score;
 
-    private double grade_1_2;
+    // 该分数等级对应的应用年级
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Grade grade;
 
-    private double grade_3_4;
+    // 达到该分数等级所需的原始成绩阈值
+    private double threshold;
 
-    public ScoreMapping(ScoreLevel scoreLevel, int score, double grade_1_2, double grade_3_4) {
+    // 该分数等级对应的项目标准
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "score_standard_id", nullable = false)
+    private ScoreStandard scoreStandard;
+
+    public ScoreMapping() {}
+
+    public ScoreMapping(ScoreLevel scoreLevel, int score, Grade grade, double threshold, ScoreStandard scoreStandard) {
         this.scoreLevel = scoreLevel;
         this.score = score;
-        this.grade_1_2 = grade_1_2;
-        this.grade_3_4 = grade_3_4;
+        this.grade = grade;
+        this.threshold = threshold;
+        this.scoreStandard = scoreStandard;
     }
 
-    public double getGrade_1_2() {
-        return grade_1_2;
+    public Grade getGrade() {
+        return grade;
     }
 
-    public double getGrade_3_4() {
-        return grade_3_4;
+    public double getThreshold() {
+        return threshold;
     }
 
-    @Override
-    public String toString() {
-        return "ScoreMapping{" +
-                "level=" + scoreLevel +
-                ", score=" + score +
-                ", grade_1_2=" + grade_1_2 +
-                ", grade_3_4=" + grade_3_4 +
-                '}';
+    public ScoreLevel getScoreLevel() {
+        return scoreLevel;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public ScoreStandard getScoreStandard() {
+        return scoreStandard;
+    }
+
+    public void setScoreLevel(ScoreLevel scoreLevel) {
+        this.scoreLevel = scoreLevel;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setGrade(Grade grade) {
+        this.grade = grade;
+    }
+
+    public void setThreshold(double threshold) {
+        this.threshold = threshold;
+    }
+
+    public void setScoreStandard(ScoreStandard scoreStandard) {
+        this.scoreStandard = scoreStandard;
     }
 }

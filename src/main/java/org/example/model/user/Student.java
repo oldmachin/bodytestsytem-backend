@@ -24,10 +24,12 @@ public class Student {
 
     private String major;
 
-    @Column(name = "user_id", nullable = false, unique = true)
-    private Long userId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    public Student(Long id, String studentId, String idCardNumber, String name, String gender, Long ethnicCode, String grade, String major, Long userId) {
+
+    public Student(Long id, String studentId, String idCardNumber, String name, String gender, Long ethnicCode, String grade, String major, User user) {
         this.id = id;
         this.studentId = studentId;
         this.idCardNumber = idCardNumber;
@@ -36,7 +38,7 @@ public class Student {
         this.ethnicCode = ethnicCode;
         this.grade = grade;
         this.major = major;
-        this.userId = userId;
+        this.user = user;
     }
 
     public Long getId() {
@@ -71,10 +73,6 @@ public class Student {
         return major;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -105,9 +103,5 @@ public class Student {
 
     public void setMajor(String major) {
         this.major = major;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 }

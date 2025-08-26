@@ -4,8 +4,13 @@ import jakarta.persistence.*;
 import org.example.model.user.Grade;
 import org.example.model.user.Student;
 
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.Set;
 
+/**
+ * 类别：实体类
+ * 功能：存储学生每年对应的体侧成绩
+ * */
 @Entity
 @Table(name = "transcripts")
 public class Transcript {
@@ -17,33 +22,40 @@ public class Transcript {
 
     private Grade testGrade;
 
+    private Double testScore;
+
+    private ScoreLevel testLevel;
+
     private String semester;
 
-    private double lungCapacityResult;
+    private LocalDateTime entryTime = LocalDateTime.now();
 
-    private double run50mResult;
+    @OneToMany(mappedBy = "transcript", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<TestResult> results;
 
-    private double sitAndReachResult;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
-    private double standingJumpResult;
+    public Transcript() {}
 
-    private int pullUpsResult;
+    public Transcript(String academicYear, Grade testGrade, String semester, Student student) {
+        this.academicYear = academicYear;
+        this.testGrade = testGrade;
+        this.semester = semester;
+        this.student = student;
+    }
 
-    private double run1000mResult;
-
-    private Double totalScore;
-
-    private ScoreLevel overallLevel;
-
-    @Column(name = "user_id", nullable = false, unique = true)
-    private Long userId;
-
-    public Transcript(Student student) {
-        this.userId = student.getUserId();
+    public ScoreLevel getTestLevel() {
+        return testLevel;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Double getTestScore() {
+        return testScore;
     }
 
     public String getAcademicYear() {
@@ -58,40 +70,16 @@ public class Transcript {
         return semester;
     }
 
-    public double getLungCapacityResult() {
-        return lungCapacityResult;
+    public LocalDateTime getEntryTime() {
+        return entryTime;
     }
 
-    public double getRun50mResult() {
-        return run50mResult;
+    public Set<TestResult> getResults() {
+        return results;
     }
 
-    public double getSitAndReachResult() {
-        return sitAndReachResult;
-    }
-
-    public double getStandingJumpResult() {
-        return standingJumpResult;
-    }
-
-    public int getPullUpsResult() {
-        return pullUpsResult;
-    }
-
-    public double getRun1000mResult() {
-        return run1000mResult;
-    }
-
-    public Double getTotalScore() {
-        return totalScore;
-    }
-
-    public ScoreLevel getOverallLevel() {
-        return overallLevel;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Student getStudent() {
+        return student;
     }
 
     public void setAcademicYear(String academicYear) {
@@ -106,35 +94,19 @@ public class Transcript {
         this.semester = semester;
     }
 
-    public void setLungCapacityResult(double lungCapacityResult) {
-        this.lungCapacityResult = lungCapacityResult;
+    public void setResults(Set<TestResult> results) {
+        this.results = results;
     }
 
-    public void setRun50mResult(double run50mResult) {
-        this.run50mResult = run50mResult;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
-    public void setSitAndReachResult(double sitAndReachResult) {
-        this.sitAndReachResult = sitAndReachResult;
+    public void setTestScore(Double testScore) {
+        this.testScore = testScore;
     }
 
-    public void setStandingJumpResult(double standingJumpResult) {
-        this.standingJumpResult = standingJumpResult;
-    }
-
-    public void setPullUpsResult(int pullUpsResult) {
-        this.pullUpsResult = pullUpsResult;
-    }
-
-    public void setRun1000mResult(double run1000mResult) {
-        this.run1000mResult = run1000mResult;
-    }
-
-    public void setTotalScore(Double totalScore) {
-        this.totalScore = totalScore;
-    }
-
-    public void setOverallLevel(ScoreLevel overallLevel) {
-        this.overallLevel = overallLevel;
+    public void setTestLevel(ScoreLevel testLevel) {
+        this.testLevel = testLevel;
     }
 }
