@@ -1,6 +1,7 @@
 package org.example.model.user;
 
 import jakarta.persistence.*;
+import org.example.model.entity.department.Class;
 
 @Entity
 @Table(name = "students")
@@ -24,13 +25,17 @@ public class Student {
 
     private String major;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "class_id")
+    private Class studentClass;
 
-    public Student(Long id, String studentId, String idCardNumber, String name, String gender, Long ethnicCode, Grade grade, String major, User user) {
-        this.id = id;
+    public Student() {}
+
+    public Student(String studentId, String idCardNumber, String name, String gender, Long ethnicCode, Grade grade, String major, User user) {
         this.studentId = studentId;
         this.idCardNumber = idCardNumber;
         this.name = name;
@@ -63,6 +68,10 @@ public class Student {
 
     public Long getEthnicCode() {
         return ethnicCode;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public Grade getGrade() {
