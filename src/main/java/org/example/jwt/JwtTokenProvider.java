@@ -4,9 +4,8 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
+import org.example.model.user.User;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -28,20 +27,16 @@ public class JwtTokenProvider {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
     }
 
-    public String generateToken(Authentication authentication) {
-        List<String> roles = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList());
+    public String generateToken(User user) {
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("roles", roles);
 
         long now = System.currentTimeMillis();
         return Jwts.builder()
                 .claims(claims)
                 .issuedAt(new Date(now))
                 .expiration(new Date(now + expiration))
-                .subject(authentication.getName())
+                .subject(user.getUsername())
                 .signWith(getKey())
                 .compact();
     }
