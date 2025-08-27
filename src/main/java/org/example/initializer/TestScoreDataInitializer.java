@@ -249,6 +249,7 @@ public class TestScoreDataInitializer implements CommandLineRunner {
             loadAllScoreStandard();
             loadMaleScoreStandard();
             loadFemaleScoreStandard();
+            loadTestItemWeight();
         } else {
             System.out.println("Data already exists. Skipping initialization.");
         }

@@ -5,6 +5,7 @@ import org.example.model.Appointment;
 import org.example.model.DTO.AppointmentRequestDTO;
 import org.example.model.DTO.AppointmentResponseDTO;
 import org.example.service.AppointmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/appointments")
 public class AppointmentController {
-
-    private final AppointmentService appointmentService;
-
-    public AppointmentController(AppointmentService appointmentService) {
-        this.appointmentService = appointmentService;
-    }
+    @Autowired
+    private AppointmentService appointmentService;
 
     /**
      * 创建一个新的体测预约。

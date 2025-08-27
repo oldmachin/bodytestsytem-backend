@@ -24,7 +24,7 @@ public class FieldController {
     }
 
     @PostMapping
-    private ResponseEntity<FieldDTO> addField(FieldRequest request) {
+    private ResponseEntity<FieldDTO> addField(@RequestBody FieldRequest request) {
         FieldDTO fieldDTO = fieldService.addField(request.fieldName(), request.fieldType());
         return new ResponseEntity<>(fieldDTO, HttpStatus.CREATED);
     }
